@@ -1,8 +1,36 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import todocontext from "../Context/todocontext";
 
-export default function Todo({ todoData, checked, checkTodo, editTodo }) {
+export default function Todo({ todoData, checked }) {
   const [editText, setEditText] = useState("");
   const [edit, setEdit] = useState(false);
+
+  const { list, setList } = useContext(todocontext);
+  function handleCheckTodo(todoId, isFinished) {
+    let tempList = list.map((todo) => {
+      if (todo.id == todoId) {
+        todo.isFinished = isFinished;
+      }
+      return todo;
+    });
+    setList(tempList);
+  }
+
+  function handleEditTodo(todoId, todoText) {
+    let tempList = list.map((todo) => {
+      if (todo.id == todoId) {
+        todo.data = todoText;
+      }
+      return todo;
+    });
+    setList(tempList);
+  }
+  function handleDelete(todoId) {
+    let tempList = list.filter((todo) => {
+      return todo.id != todoId;
+    });
+    setList(tempList);
+  }
   return (
     <>
       <div>
@@ -12,7 +40,7 @@ export default function Todo({ todoData, checked, checkTodo, editTodo }) {
           id=""
           checked={checked}
           onChange={(e) => {
-            checkTodo(todoData.id, e.target.checked);
+            handleCheckTodo(todoData.id, e.target.checked);
           }}
         />
         <span>
@@ -31,7 +59,7 @@ export default function Todo({ todoData, checked, checkTodo, editTodo }) {
                 type="button"
                 value="save"
                 onClick={() => {
-                  editTodo(todoData.id, editText);
+                  handleEditTodo(todoData.id, editText);
                   setEdit(false);
                 }}
               />
@@ -48,7 +76,13 @@ export default function Todo({ todoData, checked, checkTodo, editTodo }) {
             }}
           />
         )}
-        <input type="button" value="delete" />
+        <input
+          type="button"
+          value="delete"
+          onClick={() => {
+            handleDelete(todoData.id);
+          }}
+        />
       </div>
     </>
   );

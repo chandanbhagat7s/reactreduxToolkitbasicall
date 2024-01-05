@@ -1,44 +1,22 @@
 import { useState } from "react";
 import AddToDo from "./Components/AddToDo";
 import TodoList from "./Components/TodoList";
+import Todocontext from "./Context/todocontext";
+// DONE USING CONTEXT API
+// this context api just : we need to create context
+// then we need to wrap the content whare we need with the created context with provider method and in value attribute/prop we need to pass the state what we want to provied access
+
+// to use we just need to use 'useContext(CreatedContext)' hook and destructure the need value
 
 function App() {
   const [list, setList] = useState([]);
-  function handleAddTodo(todoData) {
-    console.log("came");
-    setList([
-      ...list,
-      { id: list.length + 1, data: todoData, isFinished: false },
-    ]);
-  }
-  function handleCheckTodo(todoId, isFinished) {
-    let tempList = list.map((todo) => {
-      if (todo.id == todoId) {
-        todo.isFinished = isFinished;
-      }
-      return todo;
-    });
-    setList(tempList);
-  }
-
-  function handleEditTodo(todoId, todoText) {
-    let tempList = list.map((todo) => {
-      if (todo.id == todoId) {
-        todo.data = todoText;
-      }
-      return todo;
-    });
-    setList(tempList);
-  }
 
   return (
     <>
-      <AddToDo addTodo={handleAddTodo} />
-      <TodoList
-        list={list}
-        checkTodo={handleCheckTodo}
-        editTodo={handleEditTodo}
-      />
+      <Todocontext.Provider value={{ list, setList }}>
+        <AddToDo />
+        <TodoList />
+      </Todocontext.Provider>
     </>
   );
 }

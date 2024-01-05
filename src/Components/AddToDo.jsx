@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import todocontext from "../Context/todocontext";
 
 export default function AddToDo({ addTodo }) {
   const [text, setText] = useState("");
+  const { setList, list } = useContext(todocontext);
+  function handleAddTodo(todoData) {
+    console.log("came");
+    setList([
+      ...list,
+      { id: list.length + 1, data: todoData, isFinished: false },
+    ]);
+  }
   return (
     <>
       Add to do{" "}
@@ -16,7 +25,7 @@ export default function AddToDo({ addTodo }) {
         type="button"
         value="ADD"
         onClick={() => {
-          addTodo(text);
+          handleAddTodo(text);
           setText("");
         }}
       />
