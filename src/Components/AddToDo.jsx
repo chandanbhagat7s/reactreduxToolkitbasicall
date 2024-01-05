@@ -3,13 +3,9 @@ import todocontext from "../Context/todocontext";
 
 export default function AddToDo({ addTodo }) {
   const [text, setText] = useState("");
-  const { setList, list } = useContext(todocontext);
+  const { setList, dispatch } = useContext(todocontext);
   function handleAddTodo(todoData) {
-    console.log("came");
-    setList([
-      ...list,
-      { id: list.length + 1, data: todoData, isFinished: false },
-    ]);
+    dispatch({ type: "addTodo", payload: { todotext: text } });
   }
   return (
     <>
