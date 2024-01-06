@@ -3,23 +3,22 @@ import AddToDo from "./Components/AddToDo";
 import TodoList from "./Components/TodoList";
 import Todocontext from "./Context/todocontext";
 import todoReducers from "./Reducers/todoReducers";
-// DONE USING CONTEXT API
-// this context api just : we need to create context
-// then we need to wrap the content whare we need with the created context with provider method and in value attribute/prop we need to pass the state what we want to provied access
+import { Provider } from "react-redux";
+import store from "../store";
+// DOING WITH THE REACT-REDUX
+// install react-redux , redux
 
-// to use we just need to use 'useContext(CreatedContext)' hook and destructure the need value
+// creat the store with passing the reducer function in it and export it
 
-// now we are going to combine it with useReducer hook
+// we need to pass the store in provider compoent
 
 function App() {
-  const [list, dispatch] = useReducer(todoReducers, []);
-
   return (
     <>
-      <Todocontext.Provider value={{ list, dispatch }}>
+      <Provider store={store}>
         <AddToDo />
         <TodoList />
-      </Todocontext.Provider>
+      </Provider>
     </>
   );
 }

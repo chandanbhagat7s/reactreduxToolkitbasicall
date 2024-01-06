@@ -8,7 +8,7 @@ function todoReducers(state, action) {
     if (action.type == 'addTodo') {
         let todoData = action.payload.todotext;
         return [
-            ...state, { id: state.length + 1, data: todoData, isFinished: false }
+            ...state, { id: state.length == 0 ? 1 : state[state.length - 1].id + 1, data: todoData, isFinished: false }
         ]
 
     }
@@ -45,8 +45,10 @@ function todoReducers(state, action) {
         })
         return temp
 
+    } else {
+        return state;
+
     }
-    return state;
 }
 
 

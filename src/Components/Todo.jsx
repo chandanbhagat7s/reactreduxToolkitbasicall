@@ -1,12 +1,14 @@
 import React, { useContext, useReducer, useState } from "react";
 import todocontext from "../Context/todocontext";
 import todoReducers from "../Reducers/todoReducers";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Todo({ todoData, checked }) {
   const [editText, setEditText] = useState("");
   const [edit, setEdit] = useState(false);
 
-  const { list, dispatch } = useContext(todocontext);
+  const list = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   return (
     <>
