@@ -3,7 +3,13 @@ import todocontext from "../Context/todocontext";
 import todoReducers from "../Reducers/todoReducers";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Todo({ todoData, checked }) {
+export default function Todo({
+  todoData,
+  checked,
+  deleteTodo,
+  editTodo,
+  finishTodo,
+}) {
   const [editText, setEditText] = useState("");
   const [edit, setEdit] = useState(false);
 
@@ -19,10 +25,7 @@ export default function Todo({ todoData, checked }) {
           id=""
           checked={checked}
           onChange={(e) => {
-            dispatch({
-              type: "checkTodo",
-              payload: { todoId: todoData.id, check: e.target.checked },
-            });
+            finishTodo(todoData.id, e.target.checked);
           }}
         />
         <span>
@@ -41,10 +44,7 @@ export default function Todo({ todoData, checked }) {
                 type="button"
                 value="save"
                 onClick={() => {
-                  dispatch({
-                    type: "editTodo",
-                    payload: { todoId: todoData.id, todotext: editText },
-                  });
+                  editTodo(todoData.id, editText);
                   setEdit(false);
                 }}
               />
@@ -65,10 +65,7 @@ export default function Todo({ todoData, checked }) {
           type="button"
           value="delete"
           onClick={() => {
-            dispatch({
-              type: "deleteTodo",
-              payload: { todoId: todoData.id },
-            });
+            deleteTodo(todoData.id);
           }}
         />
       </div>

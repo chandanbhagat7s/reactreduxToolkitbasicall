@@ -43,7 +43,7 @@ function todoReducers(state, action) {
             }
             return todo;
         })
-        return temp
+        return [...temp]
 
     } else {
         return state;

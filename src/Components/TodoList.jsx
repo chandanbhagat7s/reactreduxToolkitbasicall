@@ -2,17 +2,24 @@ import React, { useContext } from "react";
 import Todo from "./Todo";
 import { useSelector } from "react-redux";
 
-export default function TodoList() {
+export default function TodoList({ editTodo, deleteTodo, finishTodo }) {
   const list = useSelector((state) => {
-    console.log("state is ", state);
     return state;
   });
   return (
     <>
       {console.log(list)}
       {list.map((e) => {
-        console.log(e);
-        return <Todo todoData={e} checked={e.isFinished} key={e.id} />;
+        return (
+          <Todo
+            todoData={e}
+            checked={e.isFinished}
+            key={e.id}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+            finishTodo={finishTodo}
+          />
+        );
       })}
     </>
   );
